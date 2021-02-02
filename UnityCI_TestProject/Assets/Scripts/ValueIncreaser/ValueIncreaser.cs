@@ -3,18 +3,15 @@ using Text = TMPro.TMP_Text;
 
 public class ValueIncreaser : MonoBehaviour
 {
-    const int maxValue = 9;
-    const int resetValue = 0;
+    public const int maxValue = 9;
+    public const int resetValue = 0;
 
-    [SerializeField]
-    private Text leftText;
-    [SerializeField]
-    private Text rightText;
-    [SerializeField]
-    private Text additionResult;
+    public Text leftText;
+    public Text rightText;
+    public Text additionResult;
 
-    private int leftValue;
-    private int rightValue;
+    public int leftValue { get; private set; }
+    public int rightValue { get; private set; }
 
     private void Awake()
     {
@@ -48,9 +45,12 @@ public class ValueIncreaser : MonoBehaviour
 
     private void DisplayValues()
     {
+        if(leftText != null)
         leftText.text = leftValue.ToString();
-        rightText.text = rightValue.ToString();
+        if (rightText != null)
+            rightText.text = rightValue.ToString();
 
-        additionResult.text = (leftValue + rightValue).ToString();
+        if (additionResult != null)
+            additionResult.text = (leftValue + rightValue).ToString();
     }
 }
