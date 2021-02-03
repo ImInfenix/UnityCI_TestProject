@@ -33,14 +33,11 @@ jobs:
         uses: webbertakken/unity-test-runner@v1.4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          unityVersion: auto
 
       # Build
       - name: Build project
         uses: webbertakken/unity-builder@v0.10
         with:
-          unityVersion: auto
           targetPlatform: StandaloneWindows64
 
       # Output
