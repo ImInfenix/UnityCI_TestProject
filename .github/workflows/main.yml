@@ -34,13 +34,13 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          unityVersion: 2019.2.11f1
+          unityVersion: auto
 
       # Build
       - name: Build project
         uses: webbertakken/unity-builder@v0.10
         with:
-          unityVersion: 2019.2.11f1
+          unityVersion: auto
           targetPlatform: StandaloneWindows64
 
       # Output
