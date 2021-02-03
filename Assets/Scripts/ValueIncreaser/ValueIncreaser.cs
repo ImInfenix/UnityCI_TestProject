@@ -29,7 +29,7 @@ public class ValueIncreaser : MonoBehaviour
 
     public void IncreaseRight()
     {
-        rightValue+=2;
+        rightValue++;
         ClampValues();
     }
 
