@@ -24,6 +24,10 @@ jobs:
           path: Library
           key: Library
 
+      # Unity activation
+      - name: Unity - Activate
+        uses: game-ci/unity-activate@v1.3
+
       # Test
       - name: Run tests
         uses: webbertakken/unity-test-runner@v1.3
