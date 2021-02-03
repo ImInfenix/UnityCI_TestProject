@@ -24,13 +24,15 @@ jobs:
           path: Library
           key: Library
 
-      # Unity activation
-      - name: Unity - Activate
-        uses: game-ci/unity-activate@v1.3
+      # # Unity activation
+      # - name: Unity - Activate
+      #   uses: game-ci/unity-activate@v1.3
 
       # Test
       - name: Run tests
-        uses: webbertakken/unity-test-runner@v1.3
+        uses: webbertakken/unity-test-runner@v1.4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           unityVersion: 2019.2.11f1
 
