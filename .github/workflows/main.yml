@@ -32,6 +32,11 @@ jobs:
       - name: Run tests
         uses: webbertakken/unity-test-runner@v1.4
 
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Test results
+          path: artifacts
+
       # Build
       - name: Build project
         uses: webbertakken/unity-builder@v0.10
