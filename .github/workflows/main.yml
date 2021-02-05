@@ -10,7 +10,7 @@ env:
 
 jobs:
   checkLicense:
-    name: check if UNITY_LICENSE is set in github secrets
+    name: UNITY_LICENSE check
     runs-on: ubuntu-latest
     outputs:
       is_unity_license_set: ${{ steps.checkLicense_job.outputs.is_unity_license_set }}
@@ -70,7 +70,7 @@ jobs:
           path: ${{ steps.testRunner.outputs.artifactsPath }}
 
   build:
-    needs: [checkLicense]
+    needs: [checkLicense, test]
     if: needs.checkLicense.outputs.is_unity_license_set == 'true'
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
