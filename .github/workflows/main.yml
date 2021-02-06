@@ -11,7 +11,7 @@ env:
 
 jobs:
   checkLicense:
-    name: UNITY_LICENSE check
+    name: Check license
     runs-on: ubuntu-latest
     outputs:
       is_unity_license_set: ${{ steps.checkLicense_job.outputs.is_unity_license_set }}
