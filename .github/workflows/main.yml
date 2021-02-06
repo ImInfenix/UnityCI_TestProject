@@ -6,6 +6,7 @@ on:
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  UNITY_VERSION: 2019.4.18f1
   PROJECT_PATH: ./CI_PROJECT/
 
 jobs:
@@ -33,7 +34,7 @@ jobs:
         # https://github.com/game-ci/unity-request-activation-file/releases/
         uses: game-ci/unity-request-activation-file@v2.0-alpha-1
         with:
-          unityVersion: 2019.4.18f1
+          unityVersion: ${{ env.UNITY_VERSION }}
       # Upload artifact (Unity_v20XX.X.XXXX.alf)
       - name: Expose as artifact
         uses: actions/upload-artifact@v1
@@ -59,7 +60,7 @@ jobs:
         id: testRunner
         with:
           projectPath: ${{ env.PROJECT_PATH }}
-          unityVersion: 2019.4.18f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           testMode: all
           customParameters: "-nographics"
       - uses: actions/upload-artifact@v2
@@ -96,7 +97,7 @@ jobs:
       - uses: game-ci/unity-builder@v2.0-alpha-6
         with:
           projectPath: ${{ env.PROJECT_PATH }}
-          unityVersion: 2019.4.18f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: ${{ matrix.targetPlatform }}
       - uses: actions/upload-artifact@v2
         with:
