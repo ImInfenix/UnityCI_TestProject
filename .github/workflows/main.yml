@@ -53,11 +53,8 @@ jobs:
           lfs: true
       - uses: actions/cache@v2.1.4
         with:
-          path: Library
-          key: Library-test-project-${{ matrix.targetPlatform }}
-          restore-keys: |
-            Library-test-project-
-            Library-
+          path: ${{ env.PROJECT_PATH }}Library
+          key: Library-test-project
       # https://github.com/game-ci/unity-test-runner/releases/
       - uses: game-ci/unity-test-runner@v2.0-alpha-2
         id: testRunner
@@ -94,11 +91,8 @@ jobs:
           lfs: true
       - uses: actions/cache@v2.1.4
         with:
-          path: ${{ matrix.projectPath }}/Library
-          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
-          restore-keys: |
-            Library-${{ matrix.projectPath }}-
-            Library-
+          path: ${{ env.PROJECT_PATH }}Library
+          key: Library-${{ matrix.targetPlatform }}
       # https://github.com/game-ci/unity-builder/releases/
       - uses: game-ci/unity-builder@v2.0-alpha-6
         with:
