@@ -6,7 +6,6 @@ on:
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-  UNITY_VERSION: 2019.4.18f1
   PROJECT_PATH: ./
 
 jobs:
@@ -33,8 +32,6 @@ jobs:
         id: getManualLicenseFile
         # https://github.com/game-ci/unity-request-activation-file/releases/
         uses: game-ci/unity-request-activation-file@v2
-        with:
-          unityVersion: ${{ env.UNITY_VERSION }}
 
       # Upload artifact (Unity_v20XX.X.XXXX.alf)
       - name: Expose as artifact
