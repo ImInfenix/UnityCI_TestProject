@@ -32,12 +32,12 @@ jobs:
       - name: Request manual activation file
         id: getManualLicenseFile
         # https://github.com/game-ci/unity-request-activation-file/releases/
-        uses: game-ci/unity-request-activation-file@v2.0-alpha-1
+        uses: game-ci/unity-request-activation-file@v2
         with:
           unityVersion: ${{ env.UNITY_VERSION }}
       # Upload artifact (Unity_v20XX.X.XXXX.alf)
       - name: Expose as artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.getManualLicenseFile.outputs.filePath }}
           path: ${{ steps.getManualLicenseFile.outputs.filePath }}
@@ -45,28 +45,42 @@ jobs:
   test:
     needs: [checkLicense]
     if: needs.checkLicense.outputs.is_unity_license_set == 'true'
-    name: Run tests
+    name: Run tests in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - ${{ env.PROJECT_PATH }}Library
+        testMode:
+          - playmode
+          - editmode
     steps:
       - uses: actions/checkout@v2
         with:
           lfs: true
-      - uses: actions/cache@v2.1.4
+      - uses: actions/cache@v2
         with:
-          path: ${{ env.PROJECT_PATH }}Library
-          key: Library-test-project
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}
+          restore-keys: |
+            Library-
       # https://github.com/game-ci/unity-test-runner/releases/
-      - uses: game-ci/unity-test-runner@v2.0-alpha-2
-        id: testRunner
+      - uses: game-ci/unity-test-runner@v2
+        id: tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           projectPath: ${{ env.PROJECT_PATH }}
-          unityVersion: ${{ env.UNITY_VERSION }}
-          testMode: all
-          customParameters: "-nographics"
+          testMode: ${{ matrix.testMode }}
+          artifactsPath: ${{ matrix.testMode }}-artifacts
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: ${{ matrix.testMode }} Test Results
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
-          name: Test results (all modes)
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
+          name: Test results for ${{ matrix.testMode }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
 
   build:
     needs: [checkLicense, test]
