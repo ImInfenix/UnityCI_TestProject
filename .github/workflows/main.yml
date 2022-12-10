@@ -97,11 +97,11 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
 
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: Test results for ${{ matrix.testMode }}
-          path: ${{ steps.tests.outputs.artifactsPath }}
+      # - uses: actions/upload-artifact@v2
+      #   if: always()
+      #   with:
+      #     name: Test results for ${{ matrix.testMode }}
+      #     path: ${{ steps.tests.outputs.artifactsPath }}
 
   build:
     needs: [checkLicense, test]
@@ -137,7 +137,7 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: Build-${{ matrix.targetPlatform }}
+      #     path: build/${{ matrix.targetPlatform }}
